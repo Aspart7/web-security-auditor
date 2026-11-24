@@ -1,0 +1,138 @@
+{
+  "target_url": "http://127.0.0.1:60810/vulnerable",
+  "final_url": "http://127.0.0.1:60810/vulnerable",
+  "status_code": 200,
+  "scanned_at": "2026-11-24 15:17:31 UTC",
+  "score": 0,
+  "grade": "F",
+  "findings": [
+    {
+      "id": "HDR-CSP",
+      "title": "Content-Security-Policy (CSP)",
+      "category": "Security Headers",
+      "severity": "High",
+      "status": "FAIL",
+      "owasp_ref": "OWASP A05:2021 - Security Misconfiguration",
+      "evidence": "Content-Security-Policy header is missing.",
+      "remediation": "Set a restrictive CSP such as: Content-Security-Policy: default-src 'self'; script-src 'self'; object-src 'none'; frame-ancestors 'none'; base-uri 'self'"
+    },
+    {
+      "id": "HDR-HSTS",
+      "title": "Strict-Transport-Security (HSTS)",
+      "category": "Transport Security",
+      "severity": "Low",
+      "status": "WARN",
+      "owasp_ref": "OWASP A02:2021 - Cryptographic Failures",
+      "evidence": "Target responded over HTTP; HSTS is only honored over HTTPS.",
+      "remediation": "Serve production traffic exclusively over HTTPS and set: Strict-Transport-Security: max-age=31536000; includeSubDomains"
+    },
+    {
+      "id": "HDR-XCTO",
+      "title": "X-Content-Type-Options",
+      "category": "Security Headers",
+      "severity": "Medium",
+      "status": "FAIL",
+      "owasp_ref": "OWASP A05:2021 - Security Misconfiguration",
+      "evidence": "X-Content-Type-Options header is missing.",
+      "remediation": "Add header: X-Content-Type-Options: nosniff"
+    },
+    {
+      "id": "HDR-XFO",
+      "title": "Clickjacking Protection (X-Frame-Options / frame-ancestors)",
+      "category": "Security Headers",
+      "severity": "Medium",
+      "status": "FAIL",
+      "owasp_ref": "OWASP A05:2021 - Clickjacking Defense",
+      "evidence": "Weak or missing clickjacking protection (X-Frame-Options='').",
+      "remediation": "Set X-Frame-Options: DENY (or SAMEORIGIN) and CSP frame-ancestors 'none'."
+    },
+    {
+      "id": "HDR-REFERRER",
+      "title": "Referrer-Policy",
+      "category": "Privacy & Headers",
+      "severity": "Low",
+      "status": "FAIL",
+      "owasp_ref": "OWASP A05:2021 - Information Exposure",
+      "evidence": "Referrer-Policy header is missing.",
+      "remediation": "Set Referrer-Policy: strict-origin-when-cross-origin"
+    },
+    {
+      "id": "HDR-PERMISSIONS",
+      "title": "Permissions-Policy",
+      "category": "Security Headers",
+      "severity": "Low",
+      "status": "FAIL",
+      "owasp_ref": "OWASP A05:2021 - Browser Feature Hardening",
+      "evidence": "Permissions-Policy header is missing.",
+      "remediation": "Disable unused browser APIs: Permissions-Policy: geolocation=(), microphone=(), camera=()"
+    },
+    {
+      "id": "HDR-COOP-CORP",
+      "title": "Cross-Origin Isolation (COOP / CORP)",
+      "category": "Security Headers",
+      "severity": "Low",
+      "status": "WARN",
+      "owasp_ref": "OWASP A05:2021 - Cross-Origin Isolation",
+      "evidence": "Neither Cross-Origin-Opener-Policy nor Cross-Origin-Resource-Policy is set.",
+      "remediation": "Add Cross-Origin-Opener-Policy: same-origin and Cross-Origin-Resource-Policy: same-origin."
+    },
+    {
+      "id": "COOKIE-1-HTTPONLY",
+      "title": "Cookie 'sessionid' HttpOnly Flag",
+      "category": "Session Management",
+      "severity": "High",
+      "status": "FAIL",
+      "owasp_ref": "OWASP A07:2021 - Session Hijacking Protection",
+      "evidence": "Cookie 'sessionid' is missing the HttpOnly attribute.",
+      "remediation": "Add 'HttpOnly' to Set-Cookie for 'sessionid' to block JavaScript access."
+    },
+    {
+      "id": "COOKIE-1-SECURE",
+      "title": "Cookie 'sessionid' Secure Flag",
+      "category": "Session Management",
+      "severity": "High",
+      "status": "FAIL",
+      "owasp_ref": "OWASP A02:2021 - Cleartext Transmission of Sensitive Data",
+      "evidence": "Cookie 'sessionid' is missing the Secure attribute.",
+      "remediation": "Add 'Secure' to Set-Cookie for 'sessionid' and enforce HTTPS."
+    },
+    {
+      "id": "COOKIE-1-SAMESITE",
+      "title": "Cookie 'sessionid' SameSite Attribute",
+      "category": "Session Management",
+      "severity": "Medium",
+      "status": "FAIL",
+      "owasp_ref": "OWASP A01:2021 - CSRF Defense",
+      "evidence": "Cookie 'sessionid' is missing the SameSite attribute.",
+      "remediation": "Set SameSite=Strict or SameSite=Lax on cookie 'sessionid'."
+    },
+    {
+      "id": "INFO-DISCLOSURE",
+      "title": "Server & Technology Version Disclosure",
+      "category": "Information Disclosure",
+      "severity": "Low",
+      "status": "WARN",
+      "owasp_ref": "OWASP A05:2021 - Fingerprinting Exposure",
+      "evidence": "Response headers expose technology details: Server: Apache/2.4.49 (Demo), x-powered-by: PHP/7.4.3",
+      "remediation": "Strip X-Powered-By / X-AspNet-Version headers and minimize Server banner version tokens."
+    },
+    {
+      "id": "CORS-POLICY",
+      "title": "Cross-Origin Resource Sharing (CORS)",
+      "category": "Access Control",
+      "severity": "Critical",
+      "status": "FAIL",
+      "owasp_ref": "OWASP A01:2021 - Broken Access Control",
+      "evidence": "Arbitrary Origin 'https://auditor-cors-check.example' is reflected in Access-Control-Allow-Origin with Access-Control-Allow-Credentials: true.",
+      "remediation": "Validate Origin against a strict static allowlist and never combine untrusted reflection with Access-Control-Allow-Credentials: true."
+    }
+  ],
+  "headers": {
+    "Date": "Tue, 24 Nov 2026 15:17:31 GMT",
+    "Content-Type": "text/html; charset=utf-8",
+    "Server": "Apache/2.4.49 (Demo)",
+    "X-Powered-By": "PHP/7.4.3",
+    "Set-Cookie": "sessionid=demo123; Path=/"
+  },
+  "tls_info": {}
+}
